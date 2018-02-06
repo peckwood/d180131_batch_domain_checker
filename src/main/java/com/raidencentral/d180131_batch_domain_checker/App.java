@@ -1,13 +1,11 @@
 package com.raidencentral.d180131_batch_domain_checker;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileReader;
-import java.io.InputStreamReader;
-import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
@@ -37,5 +35,23 @@ public class App {
 		ObjectMapper mapper = new ObjectMapper();
 		DomainData domainData = mapper.readValue(new File(fileName), DomainData.class);
 		System.out.println(domainData);
+		createDomainsFromKeywords(domainData.getKeywords());
+	}
+	private void checkDomains(List<String> domainList){
+		
+	}
+	private static void createDomainsFromKeywords(Set<String> keywords){
+		Set<StringBuilder> resultSbList = new HashSet<StringBuilder>();
+		
+		List<StringBuilder> sbList = new ArrayList<StringBuilder>();
+		for(String keyword:keywords){
+			sbList.add(new StringBuilder(keyword));
+		}
+		for(int i=0;i<sbList.size();i++){
+			for(int j=0;j<sbList.size();j++){
+				resultSbList.add( new StringBuilder(sbList.get(i)).append(sbList.get(j)).append(".com") );
+			}
+		}
+		System.out.println(resultSbList);
 	}
 }
